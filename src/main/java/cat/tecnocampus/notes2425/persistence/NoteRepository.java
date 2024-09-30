@@ -4,6 +4,8 @@ import cat.tecnocampus.notes2425.application.dtos.CreateNoteDTO;
 import cat.tecnocampus.notes2425.application.dtos.NoteDTO;
 import cat.tecnocampus.notes2425.domain.Note;
 import cat.tecnocampus.notes2425.domain.Tag;
+import cat.tecnocampus.notes2425.domain.UserLab;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -16,7 +18,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Repository
-public class NoteRepository {
+public interface NoteRepository extends JpaRepository<Note, Long> {
+
+    List<Note> findByOwner(UserLab userLab);
+
     private final JdbcClient jdbcClient;
 
     public NoteRepository(JdbcClient jdbcClient) {
